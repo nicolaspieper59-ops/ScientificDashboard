@@ -1,0 +1,37 @@
+{
+  "cockpit": {
+    "nom": "Cockpit Cosmique",
+    "version": "1.0.0",
+    "auteur": "Nicolas",
+    "description": "Interface vivante, multisensorielle, autonome et poétique"
+  },
+  "modules": {
+    "cosmique": { "actif": true, "fichier": "cosmique.js" },
+    "capteurs": { "actif": true, "fichier": "capteurs.js" },
+    "ephemerides": { "actif": true, "fichier": "ephemerides.js" },
+    "rituel": { "actif": true, "fichier": "rituel.js" },
+    "partition": { "actif": true, "fichier": "partition.js" },
+    "performance": { "actif": true, "fichier": "performance.js" },
+    "souterrainTotal": { "actif": true, "fichier": "souterrainTotal.js" },
+    "réveil": { "actif": true, "fichier": "réveil.js" },
+    "solaire": { "actif": true, "fichier": "solaire.js" },
+    "lunaire": { "actif": true, "fichier": "lunaire.js" },
+    "sync": { "actif": true, "fichier": "sync.js" },
+    "constellation": { "actif": true, "fichier": "constellation.js" },
+    "chorégraphie": { "actif": true, "fichier": "chorégraphie.js" }
+  },
+  "localisation": {
+    "latitude": 43.4,
+    "longitude": 4.8,
+    "lieu": "Port-Saint-Louis-du-Rhône"
+  },
+  "réseau": {
+    "mode": "auto",
+    "websocket": "wss://cockpitcosmique.net/sync"
+  },
+  "journal": {
+    "max": 100,
+    "format": "localStorage",
+    "exportable": true
+  }
+}
