@@ -433,8 +433,7 @@
         const a = new Audio(`sons/${id}.mp3`);
         a.loop = loop; a.volume = vol; a.play();
       } catch {}
-    });
-  </script>
+    })
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('service-worker.js')
       .then(() => console.log('✅ Service Worker actif'))
