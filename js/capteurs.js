@@ -166,6 +166,11 @@ Bus.on('capteurs:vitesse', ({ instantanée }) => {
   document.getElementById('distanceSL').textContent = `${distanceSL.toFixed(6)} s·c`;
   document.getElementById('distanceAL').textContent = `${distanceAL.toExponential(3)} a·l`;
   document.getElementById('distanceUA').textContent = `${distanceUA.toExponential(3)} UA`;
+  document.getElementById('désactiverModules').addEventListener('click', () => {
+  const modulesNonEssentiels = ['chorégraphie', 'constellation', 'visualisationOrbitale', 'archéologie'];
+  modulesNonEssentiels.forEach(m => Bus.emit('module:disable', { nom: m }));
+});
+  
 });
        
                           
