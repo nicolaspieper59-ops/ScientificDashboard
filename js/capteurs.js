@@ -71,7 +71,55 @@ export function initCapteurs({ Bus, Pref }) {
     document.getElementById('laserDistance').textContent = `${value} mm`;
   });
 
-  // Journal souterrain
+  // 🌀 Vitesse intérieure inertielle
+  let dernièreVitesse = 0;
+  let vitesseMax = 0;
+  let distanceTotale = 0;
+  let dernièreHeure = Date.now();
+
+  window.addEventListener('devicemotion', e => {
+    const ax = e.acceleration.x ?? 0;
+    const ay = e.acceleration.y ?? 0;
+    const az = e.acceleration.z ?? 0;
+    const inertie = Math.sqrt(ax * ax + ay * ay + az * az);
+
+    Bus.emit('capteurs:inertie', inertie);
+    const el = document.getElementById('vitesseInterieure');
+    if (el) el.textContent = inertie.toFixed(2) + ' m/s²';
+
+    const maintenant = Date.now();
+    const dt = (maintenant - dernièreHeure) / 1000;
+    dernièreHeure = maintenant;
+
+    const vitesse = inertie * dt;
+    const vitesseKmH = vitesse * 3.6;
+    dernièreVitesse = vitesseKmH;
+    if (vitesseKmH > vitesseMax) vitesseMax = vitesseKmH;
+    distanceTotale += vitesse * dt;
+
+    Bus.emit('capteurs:vitesse', {
+      instantanée: vitesseKmH,
+      max: vitesseMax,
+      distance: distanceTotale,
+      durée: maintenant
+    });
+
+    const vi = document.getElementById('vitesseInstantanee');
+    const vm = document.getElementById('vitesseMax');
+    const vd = document.getElementById('distanceTotale');
+
+    if (vi) vi.textContent = vitesseKmH.toFixed(4) + ' km/h';
+    if (vm) vm.textContent = vitesseMax.toFixed(4) + ' km/h';
+    if (vd) vd.textContent = distanceTotale.toFixed(4) + ' m';
+  });
+
+  Bus.on('capteurs:resetMax', () => {
+    vitesseMax = 0;
+    const vm = document.getElementById('vitesseMax');
+    if (vm) vm.textContent = '0.0000 km/h';
+  });
+
+  // 📜 Journal souterrain
   function logSouterrain(event, data = {}) {
     const row = { event, data, at: new Date().toISOString() };
     const arr = JSON.parse(localStorage.getItem('journalSouterrain') || '[]');
@@ -82,7 +130,7 @@ export function initCapteurs({ Bus, Pref }) {
     document.getElementById('logSouterrain')?.prepend(el);
   }
 
-  // Connexion manuelle (si souhaitée)
+  // 🔌 Connexion manuelle
   window.connecterCapteurBLE = connecterBLE;
-      }
-    
+                        }
+                          
