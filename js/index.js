@@ -48,6 +48,8 @@ import { initSync } from './sync.js';
 import { initConstellation } from './constellation.js';
 import { initChoregraphie } from './chorégraphie.js';
 import { initIndicateur } from './indicateur.js';
+import { initCycle } from './cycle.js';
+
 
 // 🚀 Initialisation harmonique
 initCockpitCosmique();
@@ -64,4 +66,6 @@ initSync({ Bus });
 initConstellation({ Bus });
 initChoregraphie({ Bus });
 initIndicateur({ Bus });
+initCycle({ Bus, config: CONFIG });
+
         
