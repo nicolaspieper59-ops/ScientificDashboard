@@ -47,6 +47,7 @@ import { initLunaire } from './lunaire.js';
 import { initSync } from './sync.js';
 import { initConstellation } from './constellation.js';
 import { initChoregraphie } from './chorégraphie.js';
+import { initIndicateur } from './indicateur.js';
 
 // 🚀 Initialisation harmonique
 initCockpitCosmique();
@@ -62,4 +63,5 @@ initLunaire({ Bus, config: CONFIG });
 initSync({ Bus });
 initConstellation({ Bus });
 initChoregraphie({ Bus });
+initIndicateur({ Bus });
         
