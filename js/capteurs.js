@@ -133,4 +133,39 @@ export function initCapteurs({ Bus, Pref }) {
   // 🔌 Connexion manuelle
   window.connecterCapteurBLE = connecterBLE;
                         }
+Bus.on('capteurs:luminosité', ({ value }) => {
+  document.getElementById('luminosité').textContent = `${value} lux`;
+});
+
+Bus.on('capteurs:son', ({ db, hz }) => {
+  document.getElementById('niveauSon').textContent = `${db} dB`;
+  document.getElementById('frequenceSon').textContent = `${hz} Hz`;
+});
+
+Bus.on('capteurs:niveauBulle', ({ angle }) => {
+  document.getElementById('niveauBulle').textContent = `${angle.toFixed(1)}°`;
+});
+
+Bus.on('capteurs:boussole', ({ orientation, lune }) => {
+  document.getElementById('orientation').textContent = `${orientation}°`;
+  document.getElementById('luneDirection').textContent = lune;
+});
+
+Bus.on('capteurs:vitesse', ({ instantanée }) => {
+  const c = 299792.458; // km/s
+  const v = instantanée / 3600; // km/s
+  const pourcentLumière = (v / c) * 100;
+  const pourcentSon = (v / 0.343) * 100;
+  const distanceSL = v * 1; // en secondes-lumière
+  const distanceAL = v * 31557600 / c; // en années-lumière
+  const distanceUA = v * 3600 / 149597870.7; // en UA
+
+  document.getElementById('vitesseActuelle').textContent = `${instantanée.toFixed(4)} km/h`;
+  document.getElementById('pourcentLumière').textContent = `${pourcentLumière.toFixed(8)}%`;
+  document.getElementById('pourcentSon').textContent = `${pourcentSon.toFixed(2)}%`;
+  document.getElementById('distanceSL').textContent = `${distanceSL.toFixed(6)} s·c`;
+  document.getElementById('distanceAL').textContent = `${distanceAL.toExponential(3)} a·l`;
+  document.getElementById('distanceUA').textContent = `${distanceUA.toExponential(3)} UA`;
+});
+       
                           
